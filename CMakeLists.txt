@@ -7,8 +7,12 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(Vulkan REQUIRED)
 
-file(VOXELIZER_SRC "src/*.c" "src/**/*.c" "src/*.cc" "src/**/*.cc")
+file(GLOB VOXELIZER_SRC "src/*.c" "src/**/*.c" "src/*.cc" "src/**/*.cc")
 
-include_directories("include")
+include_directories("include" "sdk")
 link_libraries(SDL2::SDL2 SDL2_image::SDL2_image SDL2_ttf::SDL2_ttf Vulkan::Vulkan)
-add_library(Voxelizer STATIC ${VOXELIZER_SRC})
+add_library(Voxelizer SHARED ${VOXELIZER_SRC})
+
+# Test
+add_library(Voxelizer_Lib SHARED IMPORTED)
+add_executable(test "test/main.cc")
